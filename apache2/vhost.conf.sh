@@ -9,7 +9,7 @@ cat << EOF > /usr/local/apache2/conf.d/000_${SORMAS_SERVER_URL}.conf
     RewriteRule ^/(.*) https://${SORMAS_SERVER_URL}/$REQUEST_URI [R,L]
    </IfModule>
    <IfModule !mod_rewrite.c>
-   	Redirect 301 /$REQUEST_URI https://${SORMAS_SERVER_URL}/$REQUEST_URI
+   	Redirect 301 /$REQUEST_URI https://${SORMAS_SERVER_URL}:10443/$REQUEST_URI
    </IfModule>
 </VirtualHost>
 EOF
@@ -19,7 +19,7 @@ Listen 443
 <VirtualHost *:443>
         ServerName ${SORMAS_SERVER_URL}
 
-	RedirectMatch "^(/(?!downloads|keycloak|metrics).*)" https://${SORMAS_SERVER_URL}/sormas-ui\$1
+	RedirectMatch "^(/(?!downloads|keycloak|metrics).*)" https://${SORMAS_SERVER_URL}:10443/sormas-ui\$1
 	
         ErrorLog /var/log/apache2/error.log
         LogLevel warn
