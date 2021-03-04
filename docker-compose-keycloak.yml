@@ -87,8 +87,8 @@ services:
       - keycloak-postgres
     image: hzibraunschweig/sormas-keycloak:${SORMAS_DOCKER_VERSION}
     environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=sadmin
+      - KEYCLOAK_USER=${KEYCLOAK_ADMIN_USER}
+      - KEYCLOAK_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
       - DB_VENDOR=${KEYCLOAK_DB_VENDOR}
       - DB_DATABASE=${KEYCLOAK_DB_NAME}
       - DB_ADDR=${KEYCLOAK_DB_HOST}
