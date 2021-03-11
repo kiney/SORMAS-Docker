@@ -1,0 +1,14 @@
+FROM postgres:10-alpine
+# https://github.com/pgaudit/pgaudit/blob/master/README.md
+# https://docs.docker.com/config/containers/logging/syslog/
+RUN apk add --no-cache --upgrade openssl curl tzdata py-pip postgresql-dev postgresql-contrib make gcc musl-dev git && \
+    pip install pgxnclient && \
+    pgxnclient install temporal_tables && \
+    cd /tmp && \
+    git clone https://github.com/pgaudit/pgaudit.git && \
+    cd pgaudit && \
+    git checkout REL_10_STABLE && \
+    make install USE_PGXS=1 && \
+    cd / && rm -rf /tmp/pgaudit
+COPY psql.conf /etc/postgresql/postgresql.conf
+COPY setup_sormas.sh /docker-entrypoint-initdb.d/
